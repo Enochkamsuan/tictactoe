@@ -1,7 +1,12 @@
 import "./App.css";
+import Index from "./page";
 
 function App() {
-  return <div className="App">tictac</div>;
+  return (
+    <div>
+      <Index />
+    </div>
+  );
 }
 
 export default App;
