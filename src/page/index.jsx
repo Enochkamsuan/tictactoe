@@ -12,6 +12,10 @@ const Index = () => {
 
     setBoard(newBoard);
 
+    if (checkDraw(newBoard)) {
+      return;
+    }
+
     setPlayerTurn(playerTurn === "X" ? "O" : "X");
   };
 
@@ -36,11 +40,18 @@ const Index = () => {
   };
 
   const winner = checkWinner(board);
-  console.log("checkWinner", winner);
+
+  console.log("board", board);
+
+  const checkDraw = (board) => {
+    if (checkWinner(board) === null && board.every((cell) => cell !== null)) {
+      return true;
+    }
+  };
 
   return (
     <div className="bg-cyan-500 h-screen relative p-4">
-      <div className="w-[30%] absolute top-[34%] left-[34%] -transform-x-1/2 -transform-y-1/2">
+      <div className="w-full lg:w-[30%] absolute top-[34%] left-0 lg:left-[34%] -transform-x-1/2 -transform-y-1/2 px-10">
         <div className="bg-black p-2">
           <div className="grid grid-cols-3 gap-2">
             {board.map((val, id) => (
@@ -55,7 +66,11 @@ const Index = () => {
           </div>
         </div>
         <div className="font-bold text-center my-3">
-          {winner ? `Winner: ${winner}` : `Next: ${playerTurn}`}
+          {winner
+            ? `Winner: ${winner}`
+            : checkDraw(board)
+            ? "It's a Draw!"
+            : `Next: ${playerTurn}`}
         </div>
       </div>
     </div>
